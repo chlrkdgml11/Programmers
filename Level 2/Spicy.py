@@ -1,23 +1,17 @@
-def solution(scoville, K):
-    result = 0
-    before = 0
-
-    while(min(scoville) < K):
-        before = min(scoville)
+import heapq
+def solution(scoville, k):
+    heap = []
+    
+    for sc in scoville:
+        heapq.heappush(heap, sc)
         
-        scoville.sort()
-
-        scoville.append(scoville[0] + scoville[1] * 2)
-
-        scoville.remove(scoville[0])
-        scoville.remove(scoville[0])
-        scoville.sort()
-        
-        if before >= min(scoville) or len(scoville < 2):
+    cnt = 0
+    
+    while(heap[0] < k):
+        try:
+            heapq.heappush(heap, heapq.heappop(heap) + (heapq.heappop(heap) * 2))
+            cnt += 1
+        except :
             return -1
-
-        result += 1
-
-    return result
-
-solution([1, 2, 3, 9, 10, 12], 7)
+        
+    return cnt
