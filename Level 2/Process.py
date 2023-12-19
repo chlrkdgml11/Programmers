@@ -1,45 +1,44 @@
 import queue
+import random
 
 process_q = queue.Queue()
 chr_q = queue.Queue()
 
-priority = [5, 4, 3, 2, 1]
+priority = [1,1,9,1,1,1]
 location = 0
-l = len(priority)
+
 priority_chr = []
-result = []
 for i in range(len(priority)):
     priority_chr.append(chr(i + 65))
 
-while(len(priority) > 0):
-    print('priority = ', priority)
-    print('priority_chr = ', priority_chr)
-    
-    if priority[0] != max(priority):
-        print('result X')
+for p in priority:
+    process_q.put(p)
 
-        process_q.put(priority[0])
-        chr_q.put(priority_chr[0])
+for pc in priority_chr:
+    chr_q.put(pc)
 
-        del priority[0]
-        del priority_chr[0]
-
-    
-    else:
-        print('result O')
-        result.append(priority_chr[0])
-
-        del priority[0]
-        del priority_chr[0]
-    
-
-    print('result = ', result)
-    print('')
+result = []
+l = len(priority)
 
 while(len(result) != l):
-    result.append(chr_q.get())
+    M = max(priority)
+
+    process_temp = process_q.get()
+    chr_temp = chr_q.get()
+
+    if process_temp == M:
+        result.append(chr_temp)
+        priority.remove(process_temp)
+    
+    else:
+        process_q.put(process_temp)
+        chr_q.put(chr_temp)
 
 print(result)
 print(result.index(chr(65 + location)) + 1)
+
+
+
+
 
 
