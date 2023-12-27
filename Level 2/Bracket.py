@@ -13,7 +13,7 @@ def solution(S):
             list.append(s)
 
         else:
-            if len(s) == 0:
+            if len(list) == 0:
                 return False
             
             else:
